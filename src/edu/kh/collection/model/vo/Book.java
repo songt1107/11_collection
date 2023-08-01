@@ -2,29 +2,29 @@ package edu.kh.collection.model.vo;
 
 public class Book {
 
-	private int num;
-	private String author;
+	private int bookNum;
 	private String name;
+	private String author;
 	private int price;
 	private String publisher;
 	
 	
 	public Book() {}
 	
-	public Book(int num, String author, String name, int price, String publisher) {
-		this.num = num;
-		this.author = author;
+	public Book(int bookNum,  String name, String author, int price, String publisher) {
+		this.bookNum = bookNum;
 		this.name = name;
+		this.author = author;
 		this.price = price;
 		this.publisher = publisher;
 	}
 
-	public int getNum() {
-		return num;
+	public int getbookNum() {
+		return bookNum;
 	}
 
-	public void setNum(int num) {
-		this.num = num;
+	public void setNum(int bookNum) {
+		this.bookNum = bookNum;
 	}
 
 	public String getAuthor() {
@@ -61,11 +61,9 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "[도서번호 : " + num + "/ 도서작가 : " + author + "/ 도서제목 : " + name + "/ 도서가격 : " + price + "/ 출판사 : "
+		return "[도서번호 : " + bookNum + " / 도서제목 : " + name + " / 도서작가 : " + author + " / 도서가격 : " + price + " / 출판사 : "
 				+ publisher + "]";
 	}
-	
-	
 	
 	
 }

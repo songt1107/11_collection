@@ -1,7 +1,7 @@
 package edu.kh.collection.model.service;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,21 +11,22 @@ public class BookService {
 	
 	private Scanner sc = new Scanner(System.in);
 	
-	private List<Book> bookList = new LinkedList<Book>();
+	private List<Book> bookList = new ArrayList<Book>();
+	private List<Book> favList = new ArrayList<Book>();
 	
 	public BookService() {
-		
-		
-		
+		bookList.add(new Book(1111, "세이노의 가르침", "세이노", 6480, "데이원"));
+		bookList.add(new Book(2222, "문과남자의 과학공부", "유시민", 15750, "돌베개"));
+		bookList.add(new Book(3333, "역행자", "자청", 17550, "웅진지식하우스"));
+		bookList.add(new Book(4444, "꿀벌의 예언", "베르나르 베르베르", 15120, "열린책들"));
+		bookList.add(new Book(5555, "도둑맞은 집중력", "요한 하리", 16920, "어크로스"));
 	}
 	
 	public void displayMenu() {
 		
 		int menuNum = 0;
 		
-		
 		do {
-			
 		
 		System.out.println("<도서 목록 프로그램>");
 		
@@ -48,8 +49,8 @@ public class BookService {
 			case 2 : selectAll(); break;
 			case 3 : System.out.println( updateBook() ); break;
 			case 4 : System.out.println( removeBook() ); break;
-			case 5 : System.out.println("즐겨찾기 추가"); break;
-			case 6 : System.out.println("즐겨찾기 삭제"); break;
+			case 5 : System.out.println( addFavorite() ); break;
+			case 6 : System.out.println( deleteFavorite() ); break;
 			case 0 : System.out.println("프로그램 종료..."); break;
 			default : System.out.println("메뉴에 작성된 번호만 입력해주세요.");
 			}
@@ -71,14 +72,14 @@ public class BookService {
 		System.out.println("=======도서등록=======");
 		
 		System.out.println("도서 번호 : ");
-		int num = sc.nextInt();
+		int bookNum = sc.nextInt();
 		sc.nextLine();
-		
-		System.out.println("작가 : ");
-		String author = sc.nextLine();
 		
 		System.out.println("제목 : ");
 		String name = sc.nextLine();
+		
+		System.out.println("작가 : ");
+		String author = sc.nextLine();
 		
 		System.out.println("가격 : ");
 		int price = sc.nextInt();
@@ -87,7 +88,7 @@ public class BookService {
 		System.out.println("출판사 : ");
 		String publisher = sc.nextLine();
 		
-		if( bookList.add(new Book(num, author, name, price, publisher)) ){
+		if( bookList.add(new Book(bookNum, name, author, price, publisher)) ){
 			return "성공";
 		} else {
 			return "실패";
@@ -103,10 +104,7 @@ public class BookService {
 			System.out.println("도서 정보가 없습니다");
 			return;
 		}
-		
-		int index = 0;
 		for(Book bk : bookList) {
-			System.out.print(index++ + "번 : ");
 			System.out.println(bk);
 		}
 		
@@ -114,45 +112,51 @@ public class BookService {
 	
 	
 	public String updateBook() throws InputMismatchException {
+		
 		System.out.println("=======도서수정=======");
 		
-		System.out.println("인덱스 번호 입력 : ");
-		int index = sc.nextInt();
+		System.out.println("도서 번호 입력 : ");
+		int num = sc.nextInt();
 		
-		if(bookList.isEmpty()) {
-			return "등록된 도서가 없습니다";
-		} else if(index < 0){
-			return "음수는 입력할 수 없습니다";
-		} else if(index >= bookList.size() ) {
-			return "범위를 넘어선 값을 입력할 수 없습니다";
-		} else {
-			System.out.println(index + "번째 등록된 도서 정보");
-			System.out.println(bookList.get(index));
+		boolean bookFound = false;
+		
+		for (Book book : bookList) {
+		if (book.getbookNum() == num) {
+		bookFound = true;
+		System.out.println(num + "번 도서 정보");
+		System.out.println(book);
+		            
+		System.out.println("도서 번호: ");
+		int bookNum = sc.nextInt();
+		sc.nextLine();
+		            
+		System.out.println("제목: ");
+		String name = sc.nextLine();
+
+		System.out.println("작가: ");
+	    String author = sc.nextLine();
+
+		System.out.println("가격: ");
+		int price = sc.nextInt();
+		sc.nextLine();
+
+		System.out.println("출판사: ");
+		String publisher = sc.nextLine();
+
+		int index = bookList.indexOf(book);
+		 
+		Book temp = bookList.set(index, new Book(bookNum, name, author, price, publisher));
+		            return temp.getName() + "의 정보가 수정되었습니다";
+			}
+		}
+
+		if (!bookFound) {
+		return num + "번 도서를 찾을 수 없습니다.";
+		} return "수정완료";
 			
-			System.out.println("도서 번호 : ");
-			int num = sc.nextInt();
-			sc.nextLine();
-			
-			System.out.println("작가 : ");
-			String author = sc.nextLine();
-			
-			System.out.println("제목 : ");
-			String name = sc.nextLine();
-			
-			System.out.println("가격 : ");
-			int price = sc.nextInt();
-			sc.nextLine();
-			
-			System.out.println("출판사 : ");
-			String publisher = sc.nextLine();
-			
-			Book temp = bookList.set(index, new Book(num, author, name, price, publisher));
-			
-			return temp.getName() + "의 정보가 변경되었습니다";
-			
+		    
 		}
 		
-	}
 	
 	
 	public String removeBook() throws InputMismatchException {
@@ -163,6 +167,7 @@ public class BookService {
 		
 		if(bookList.isEmpty()) {
 			return "등록된 도서가 없습니다";
+			
 		} else if( index < 0 ){
 			return "음수는 입력할 수 없습니다";
 		
@@ -170,13 +175,14 @@ public class BookService {
 			return "범위를 넘어선 값을 입력할 수 없습니다";
 		
 		} else {
-			System.out.println("정말 삭제하시겠습니까?(Y/N) :");
+			System.out.println(bookList.get(index));
+			System.out.print("정말 삭제하시겠습니까?(Y/N) :");
 			
 			char ch = sc.next().toUpperCase().charAt(0);
 			
 			if(ch == 'Y') {
 				Book temp = bookList.remove(index);
-				return temp.getName() + "의 정보가 제거되었습니다.";
+				return temp.getName() + "의 정보가 삭제되었습니다.";
 				
 			} else {
 				return "취소";
@@ -185,6 +191,64 @@ public class BookService {
 		}
 		
 	}
+	
+	
+	public String addFavorite() {
+		System.out.println("===== 즐겨찾기 등록 =====");
+		System.out.println("등록할 도서 번호를 입력하세요 : ");
+		int input = sc.nextInt();
+		
+		boolean flag = true;
+		
+		for(Book temp : bookList) {
+			if(temp.getbookNum() == input) {
+				
+				favList.add(temp);
+				
+				flag = false;
+			}
+		}
+		
+		if(flag) {
+			return "찾는 번호가 없습니다.";
+		} else {
+			return "등록 성공";
+		}
+		
+		
+	}
+	
+	
+	public String deleteFavorite() {
+		
+		System.out.println("=====즐겨 찾기 삭제=====");
+		
+		System.out.print("즐겨찾기 삭제할 도서 번호를 입력하세요 : ");
+		int input = sc.nextInt();
+		
+		boolean flag = true;
+		
+		for(Book temp : favList) {
+			if(temp.getbookNum() == input) {
+				
+				int index = favList.indexOf(temp);
+				
+				favList.remove(index);
+				
+				flag = false;
+				
+				break;
+			}
+		}
+		
+		if (flag) {
+			return "찾는 번호가 없습니다.";
+		} else {
+			return "삭제 성공";
+		}
+	}
+	
+	
 	
 	
 }
