@@ -374,7 +374,7 @@ public class StudentService {
 			if ( std.getName().contains(input) ) { 
 			System.out.println(std);
 			flag = false ;
-			} 
+			}
 		}
 			if (flag) {
 			 System.out.println("검색 결과가 없습니다.");
