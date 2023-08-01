@@ -36,6 +36,7 @@ public class BookService {
 		System.out.println("4. 도서삭제");
 		System.out.println("5. 즐겨찾기 추가");
 		System.out.println("6. 즐겨찾기 삭제");
+		System.out.println("7. 추천도서");
 		System.out.println("0. 프로그램 종료");
 		
 		System.out.println("\n메뉴 번호 선택 >>");
@@ -51,6 +52,7 @@ public class BookService {
 			case 4 : System.out.println( removeBook() ); break;
 			case 5 : System.out.println( addFavorite() ); break;
 			case 6 : System.out.println( deleteFavorite() ); break;
+			case 7 : randomBook(); break;
 			case 0 : System.out.println("프로그램 종료..."); break;
 			default : System.out.println("메뉴에 작성된 번호만 입력해주세요.");
 			}
@@ -248,6 +250,14 @@ public class BookService {
 		}
 	}
 	
+	
+	public void randomBook() {
+		
+		int max = bookList.size();
+		int random = (int)(Math.random() * max);
+		
+		System.out.println(bookList.get(random).getName());
+	}
 	
 	
 }

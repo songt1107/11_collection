@@ -10,7 +10,7 @@ public class SetRun {
 		//service.ex1();
 		//service.ex2();
 		//service.ex3();
-		//service.ex4();
+		service.ex4();
 		service.lotto();
 	}
 }

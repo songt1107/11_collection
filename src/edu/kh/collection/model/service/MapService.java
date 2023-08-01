@@ -1,6 +1,8 @@
 package edu.kh.collection.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -104,16 +106,32 @@ public class MapService {
 	
 	
 	public void ex3() {
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
+		 List<Map<String, Object>> list = new ArrayList<Map<String, Object>> ();      
+	      
+	     for(int i = 0; i<10; i++) {
+	         //Map 생성
+	         Map<String, Object> map = new HashMap<String, Object>();
+	         
+	         //Map에 데이터 추가
+	         map.put("id", "user0" + i);
+	         map.put("pw", "pass0" + i);
+	         
+	         //Map을 List에 추가
+	         list.add(map);
+	         
+	      }
+	      
+	      //for문 종료 시 List에는 10개의 Map 객체가 추가되어 있다.
+	      
+	            // *List에 저장된 Map에서 key가 "id"인 경우의 value 모두 출력
+	            
+	            //향상된 for문
+	            for(Map<String, Object> temp : list) {
+	               //자료형               변수    리스트
+	               System.out.println(temp.get("id"));
+	            }
+	                    System.out.println("list");
+	   			}
 	
 	
 }
